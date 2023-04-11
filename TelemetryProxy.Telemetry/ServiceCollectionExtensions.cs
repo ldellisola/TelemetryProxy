@@ -23,8 +23,6 @@ public static class ServiceCollectionExtensions
                                                    .AddSource(SecretServiceTracer.TracerName)
                              );
         
-        services.AddSingleton<DummyServiceTracer>();
-        services.AddSingleton<SecretServiceTracer>();
         return services;
     }
     
@@ -39,6 +37,7 @@ public static class ServiceCollectionExtensions
         services.TryAddSingleton<IProxyGenerator,ProxyGenerator>();
         services.AddScoped<TImplementation>();
         services.TryAddTransient<TraceInterceptor<TMetrics>>();
+        services.TryAddSingleton<TMetrics>();
         
 
         services.AddScoped(provider =>
