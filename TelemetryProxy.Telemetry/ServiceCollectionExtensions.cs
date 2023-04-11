@@ -11,6 +11,9 @@ namespace TelemetryProxy.Telemetry;
 
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// It sets up the OpenTelemetry pipeline and registers the tracers
+    /// </summary>
     public static IServiceCollection SetUpOpenTelemetry(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddTelemetry(
@@ -25,6 +28,9 @@ public static class ServiceCollectionExtensions
         return services;
     }
     
+    /// <summary>
+    /// It registers a scoped service that will be traced
+    /// </summary>
     public static IServiceCollection AddScopedTraceableService<TInterface, TImplementation, TMetrics>(this IServiceCollection services)
         where TInterface : class
         where TImplementation : class, TInterface
@@ -47,6 +53,9 @@ public static class ServiceCollectionExtensions
         return services;
     }
     
+    /// <summary>
+    /// It registers a singleton service that will be traced
+    /// </summary>
     public static IServiceCollection AddSingletonTraceableService<TInterface, TImplementation, TMetrics>(this IServiceCollection services)
         where TInterface : class
         where TImplementation : class, TInterface
@@ -69,6 +78,9 @@ public static class ServiceCollectionExtensions
         return services;
     }
     
+    /// <summary>
+    /// It registers a transient service that will be traced
+    /// </summary>
     public static IServiceCollection AddTransientTraceableService<TInterface, TImplementation, TMetrics>(this IServiceCollection services)
         where TInterface : class
         where TImplementation : class, TInterface

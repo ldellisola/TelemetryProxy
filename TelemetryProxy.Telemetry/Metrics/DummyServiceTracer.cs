@@ -2,6 +2,9 @@ using System.Diagnostics;
 
 namespace TelemetryProxy.Telemetry.Metrics;
 
+/// <summary>
+/// Main service tracer
+/// </summary>
 public class DummyServiceTracer : IServiceTracer
 {
     public static string TracerName => "DummyTracer";

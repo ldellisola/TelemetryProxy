@@ -8,13 +8,11 @@ public class DummyService : IDummyService
     public void DoSomething()
     {
          Thread.Sleep(1000);
-        // await Task.Delay(Random.Shared.Next(3,10) * 100);
     }
 
     public async Task DoSomethingElse(string textParam, int numberParam,User user, Place place, object? nullParam = null)
     {
         await Task.Delay(1000);
-        // await Task.Delay(Random.Shared.Next(3,10) * 100);
     }
 }
 

@@ -11,7 +11,6 @@ public class TraceInterceptor<TTracer> : IAsyncInterceptor
 where TTracer: class, IServiceTracer
 {
     private readonly IServiceProvider _serviceProvider;
-    
     private IServiceTracer _tracer;
     private string _operationName = string.Empty;
     private Dictionary<string,object?>? _tags;
@@ -22,6 +21,35 @@ where TTracer: class, IServiceTracer
         _serviceProvider = serviceProvider;
     }
     
+    public void InterceptSynchronous(IInvocation invocation)
+    {
+        ParseMethodInformation(invocation);
+        var activity = _tracer.Trace(_operationName, _tags);
+        try
+        {
+            invocation.Proceed();
+        }
+        finally
+        {
+            activity?.Dispose();
+        }
+    }
+
+    public void InterceptAsynchronous(IInvocation invocation)
+    {
+        ParseMethodInformation(invocation);
+        invocation.ReturnValue = InterceptAsynchronousInternal(invocation);
+    }
+    
+    public void InterceptAsynchronous<TResult>(IInvocation invocation)
+    {
+        ParseMethodInformation(invocation);
+        invocation.ReturnValue = InterceptAsynchronousInternal<TResult>(invocation);
+    }
+    
+    /// <summary>
+    /// It parses the method information and sets the tracer and the operation name
+    /// </summary>
     private void ParseMethodInformation(IInvocation invocation)
     {
         var traceAttribute = invocation.Method.GetAttributes<TraceMethodAttribute>().First();
@@ -46,6 +74,9 @@ where TTracer: class, IServiceTracer
 
     }
 
+    /// <summary>
+    /// It parses the invocation and creates a string with the method call
+    /// </summary>
     private static string RecreateMethodCall(IInvocation invocation)
     {
         var builder = new StringBuilder(100);
@@ -78,26 +109,9 @@ where TTracer: class, IServiceTracer
         return builder.ToString();
     }
 
-    public void InterceptSynchronous(IInvocation invocation)
-    {
-        ParseMethodInformation(invocation);
-        var activity = _tracer.Trace(_operationName, _tags);
-        try
-        {
-            invocation.Proceed();
-        }
-        finally
-        {
-            activity?.Dispose();
-        }
-    }
-
-    public void InterceptAsynchronous(IInvocation invocation)
-    {
-        ParseMethodInformation(invocation);
-        invocation.ReturnValue = InterceptAsynchronousInternal(invocation);
-    }
-
+    /// <summary>
+    /// It intercepts the asynchronous method call
+    /// </summary>
     private async Task InterceptAsynchronousInternal(IInvocation invocation)
     {
         var activity = _tracer.Trace(_operationName, _tags);
@@ -113,6 +127,9 @@ where TTracer: class, IServiceTracer
         }
     }
     
+    /// <summary>
+    /// It intercepts the asynchronous method call that returns a value
+    /// </summary>
     private async Task<TResult>InterceptAsynchronousInternal<TResult>(IInvocation invocation)
     {
         var activity = _tracer.Trace(_operationName, _tags);
@@ -129,9 +146,4 @@ where TTracer: class, IServiceTracer
         }
     }
 
-    public void InterceptAsynchronous<TResult>(IInvocation invocation)
-    {
-        ParseMethodInformation(invocation);
-        invocation.ReturnValue = InterceptAsynchronousInternal<TResult>(invocation);
-    }
 }
