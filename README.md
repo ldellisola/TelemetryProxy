@@ -6,3 +6,4 @@ More information can be found here:
 - https://kozmic.net/dynamic-proxy-tutorial/
 - https://github.com/castleproject/Core/blob/master/docs/dynamicproxy-async-interception.md
 - https://github.com/JSkimming/Castle.Core.AsyncInterceptor
+- https://www.youtube.com/watch?v=vBdf3pe1jNU
