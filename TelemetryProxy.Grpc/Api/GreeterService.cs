@@ -1,21 +1,24 @@
 using Grpc.Core;
 using TelemetryProxy.Grpc.Services;
+using TelemetryProxy.Telemetry.Metrics;
 
 namespace TelemetryProxy.Grpc.Api;
 
 public class GreeterService : Greeter.GreeterBase
 {
-    private readonly ILogger<GreeterService> _logger;
     private readonly IDummyService _dummyService;
-    public GreeterService(ILogger<GreeterService> logger, IDummyService dummyService)
+    private readonly IServiceTracer _tracer;
+
+    public GreeterService(IDummyService dummyService, DummyServiceTracer tracer)
     {
-        _logger = logger;
         _dummyService = dummyService;
+        _tracer = tracer;
     }
 
     public override async Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
     {
         _dummyService.DoSomething();
+
         await _dummyService.DoSomethingElse(
                                             numberParam: 9999,
                                             textParam: "papapa",
@@ -25,4 +28,5 @@ public class GreeterService : Greeter.GreeterBase
 
         return new HelloReply { Message = "Hello " + request.Name };
     }
+    
 }

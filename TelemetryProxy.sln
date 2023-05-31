@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryProxy.Grpc", "Tele
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryProxy.Telemetry", "TelemetryProxy.Telemetry\TelemetryProxy.Telemetry.csproj", "{73D81873-9D8E-4223-8E71-A0592F6D34AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryProxy.Gen", "TelemetryProxy.Gen\TelemetryProxy.Gen.csproj", "{493FA2B5-D902-4EBE-9C89-BB1133146657}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryProxy.Benchmark", "TelemetryProxy.Benchmark\TelemetryProxy.Benchmark.csproj", "{F4F3199A-2C49-4728-A0FF-E6AD4CAF0238}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{73D81873-9D8E-4223-8E71-A0592F6D34AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73D81873-9D8E-4223-8E71-A0592F6D34AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73D81873-9D8E-4223-8E71-A0592F6D34AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{493FA2B5-D902-4EBE-9C89-BB1133146657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{493FA2B5-D902-4EBE-9C89-BB1133146657}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{493FA2B5-D902-4EBE-9C89-BB1133146657}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{493FA2B5-D902-4EBE-9C89-BB1133146657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4F3199A-2C49-4728-A0FF-E6AD4CAF0238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4F3199A-2C49-4728-A0FF-E6AD4CAF0238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4F3199A-2C49-4728-A0FF-E6AD4CAF0238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4F3199A-2C49-4728-A0FF-E6AD4CAF0238}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

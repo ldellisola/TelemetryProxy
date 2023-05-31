@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Grpc": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\TelemetryProxy.Grpc\\TelemetryProxy.Grpc.csproj"
+    },
+    "Telemetry": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\TelemetryProxy.Telemetry\\TelemetryProxy.Telemetry.csproj"
+    }
+  }
+}

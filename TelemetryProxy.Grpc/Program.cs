@@ -1,3 +1,4 @@
+using RystadEnergy.Shared.Telemetry;
 using TelemetryProxy.Grpc.Api;
 using TelemetryProxy.Grpc.Services;
 using TelemetryProxy.Telemetry;
@@ -5,9 +6,17 @@ using TelemetryProxy.Telemetry.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 builder.Services.AddGrpc();
 
-builder.Services.SetUpOpenTelemetry(builder.Configuration);
+builder.Services.AddTelemetry(
+                              builder.Configuration, 
+                              configureTraces: t=> t
+                                                   .AddDummyServiceTracer()
+                                                   .AddSecretServiceTracer()
+                             );
+builder.Services.AddScoped<SecretServiceTracer>();
 builder.Services.AddScopedTraceableService<IDummyService,DummyService,DummyServiceTracer>();
 
 var app = builder.Build();

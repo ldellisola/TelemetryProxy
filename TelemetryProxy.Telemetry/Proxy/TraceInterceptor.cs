@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text;
 using Castle.Core.Internal;
 using Castle.DynamicProxy;
@@ -28,6 +29,11 @@ where TTracer: class, IServiceTracer
         try
         {
             invocation.Proceed();
+        }
+        catch (Exception e)
+        {
+            activity?.SetStatus(ActivityStatusCode.Error, e.Message);
+            throw;
         }
         finally
         {
@@ -115,11 +121,15 @@ where TTracer: class, IServiceTracer
     private async Task InterceptAsynchronousInternal(IInvocation invocation)
     {
         var activity = _tracer.Trace(_operationName, _tags);
-        
         try
         {
             invocation.Proceed();
             await (Task) invocation.ReturnValue;
+        }
+        catch (Exception e)
+        {
+            activity?.SetStatus(ActivityStatusCode.Error, e.Message);
+            throw;
         }
         finally
         {
@@ -139,6 +149,11 @@ where TTracer: class, IServiceTracer
             invocation.Proceed();
             var result = await (Task<TResult>) invocation.ReturnValue;
             return result;
+        }
+        catch (Exception e)
+        {
+            activity?.SetStatus(ActivityStatusCode.Error, e.Message);
+            throw;
         }
         finally
         {

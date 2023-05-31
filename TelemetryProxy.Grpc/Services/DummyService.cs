@@ -7,7 +7,7 @@ public class DummyService : IDummyService
 {
     public void DoSomething()
     {
-         Thread.Sleep(1000);
+        Thread.Sleep(1000);
     }
 
     public async Task DoSomethingElse(string textParam, int numberParam,User user, Place place, object? nullParam = null)
